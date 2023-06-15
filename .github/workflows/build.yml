@@ -22,7 +22,15 @@ jobs:
         run: npm install -g docfx
 
       - name: Build DocFX site
-        run: docfx
+        run: |
+          if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+            docfx.sh
+          elif [[ "$OSTYPE" == "darwin"* ]]; then
+            docfx
+          else
+            echo "Unsupported operating system: $OSTYPE"
+            exit 1
+          fi
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.1
