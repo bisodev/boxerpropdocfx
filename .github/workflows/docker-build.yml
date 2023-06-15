@@ -26,12 +26,6 @@ jobs:
     - name: Push Docker image to registry
       run: docker --debug push bisodev/docfx-build
  
-    - name: Remove existing containers and images
-      run: |
-        docker stop $(docker ps -a -q)
-        docker rm $(docker ps -a -q)
-        docker rmi $(docker images -q)
- 
     - name: Create and start new container
       run: docker run -d -p 8080:80 --name docfx-container bisodev/docfx-build
  
