@@ -6,12 +6,9 @@ on:
       - main  # Change this to the branch you want to trigger the build on
  
 jobs:
-  build:
-    runs:
-     using:
-      - ubuntu-latest
-      
-
+  build-and-deploy:
+  
+    runs-on: ubuntu-latest
     steps:
     
     - name: Checkout code
