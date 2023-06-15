@@ -13,16 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
+      - name: Setup .NET core
+        uses: actions/setup-dotnet@v1
         with:
-          node-version: '16.x'
-
-      - name: Install DocFX
-        run: npm install -g docfx
+          dotnet-version: '5.0'
 
       - name: Build DocFX site
-        run: docfx build docfx.json
+        run: |
+         dotnet tool install -g docfx.console
+         docfx build
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.1
