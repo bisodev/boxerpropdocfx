@@ -20,7 +20,7 @@ jobs:
 
       - name: Build DocFX site
         run: |
-         dotnet tool install -g docfx.console --version 2.59.3
+         dotnet tool install -g docfx
          docfx build
 
       - name: Deploy to GitHub Pages
