@@ -31,3 +31,5 @@ jobs:
         with:
           branch: gh-pages
           folder: _site  # Chang
+          token: ${{ secrets.PAT_TOKEN }}
+          clean: true
