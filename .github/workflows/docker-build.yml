@@ -15,7 +15,7 @@ jobs:
  
     - name: Build and tag Docker image
       run: |
-        docker build -t your-image-name .
+        docker build -t docfx-build .
         docker tag docfx-build docker.io/docfx-build
  
     - name: Log in to Docker registry
