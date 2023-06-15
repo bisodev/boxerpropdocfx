@@ -1,0 +1,40 @@
+name: Docker Build and Deploy
+ 
+on:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger the build on
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+ 
+    - name: Build and tag Docker image
+      run: |
+        docker build -t your-image-name .
+        docker tag docfx-build docker.io/docfx-build
+ 
+    - name: Log in to Docker registry
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} docker.io
+ 
+    - name: Push Docker image to registry
+      run: docker push docker.io/docfx-build
+ 
+    - name: Remove existing containers and images
+      run: |
+        docker stop $(docker ps -a -q)
+        docker rm $(docker ps -a -q)
+        docker rmi $(docker images -q)
+ 
+    - name: Create and start new container
+      run: docker run -d -p 8080:80 --name docfx-container docker.io/docfx-build
+ 
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.1
+      with:
+        branch: gh-pages
+        folder: .  # Change this if your static files are located in a different directory
