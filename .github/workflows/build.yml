@@ -1,0 +1,31 @@
+name: Docker Build and Deploy
+ 
+on:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger the build on
+ 
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      - name: Install DocFX
+        run: npm install -g docfx
+
+      - name: Build DocFX site
+        run: docfx
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: _site  # Chang
