@@ -17,14 +17,14 @@ jobs:
         
     - name: Build and tag Docker image
       run: |
-        docker build -t docfx-build .
-        docker tag docfx-build docker.io/docfx-build
+        docker build -t bisodev/docfx-build .
+        docker tag bisodev/docfx-build bisodev/docfx-build
  
     - name: Log in to Docker registry
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} docker.io
  
     - name: Push Docker image to registry
-      run: docker --debug push docker.io/docfx-build
+      run: docker --debug push bisodev/docfx-build
  
     - name: Remove existing containers and images
       run: |
@@ -33,7 +33,7 @@ jobs:
         docker rmi $(docker images -q)
  
     - name: Create and start new container
-      run: docker run -d -p 8080:80 --name docfx-container docker.io/docfx-build
+      run: docker run -d -p 8080:80 --name docfx-container bisodev/docfx-build
  
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@4.1.1
